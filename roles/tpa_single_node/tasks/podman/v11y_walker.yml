@@ -42,7 +42,6 @@
     spec:
       state: started
       service_name: v11y-walker
-      network: "{{ tpa_single_node_podman_network }}"
       manifest_file: "{{ role_path }}/templates/manifests/v11y/walker/Deployment.yaml.j2"
       kube_file: "{{ role_path }}/templates/systemd/default.kube.j2"
 
