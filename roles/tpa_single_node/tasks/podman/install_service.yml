@@ -1,0 +1,22 @@
+- name: Generate V11y Walker deployment manifest
+  ansible.builtin.template:
+    src: "{{ spec.manifest_file }}"
+    dest: "{{ tpa_single_node_kube_manifest_dir }}/{{ spec.service_name }}-Deployment.yaml"
+    mode: "0600"
+
+- name: Generate V11y Walker Quadlet file
+  ansible.builtin.template:
+    src: "{{ spec.kube_file }}"
+    dest: "/etc/containers/systemd/{{ spec.service_name }}.kube"
+    mode: "0600"
+
+- name: Reload systemd manager configuration
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Ensure v11y-walker service is enabled and started
+  ansible.builtin.systemd_service:
+    name: "{{ spec.service_name }}"
+    state: "{{ spec.state }}"
+    no_block: true
+    enabled: true

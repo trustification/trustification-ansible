@@ -2,7 +2,7 @@
 Description=Run v11y-walker Pod 
 
 [Kube]
-Yaml=/etc/rhtpa/manifests/V11y-Walker-Deployment.yaml
+Yaml=/etc/rhtpa/manifests/v11y-walker-Deployment.yaml
 
 [Service]
 Restart=always

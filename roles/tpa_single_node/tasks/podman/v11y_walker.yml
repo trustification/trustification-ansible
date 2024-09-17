@@ -36,28 +36,15 @@
 
 #  @TODO remove v11-walker from /etc/cron.d after the podman build
 
-- name: Generate V11y Walker deployment manifest
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/manifests/v11y/walker/Deployment.yaml.j2"
-    dest: "{{ tpa_single_node_kube_manifest_dir }}/V11y-Walker-Deployment.yaml"
-    mode: "0600"
-
-- name: Copy V11y Walker Quadlet file
-  ansible.builtin.copy:
-    src: "{{ role_path }}/templates/manifests/v11y/walker/Deployment.kube"
-    dest: /etc/containers/systemd/v11y-walker.kube
-    mode: "0600"
-
-- name: Reload systemd manager configuration
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-
-- name: Ensure v11y-walker service is enabled and started
-  ansible.builtin.systemd_service:
-    name: v11y-walker
-    state: restarted
-    no_block: true
-    enabled: true
+- name: Deploy v11walker Pod
+  ansible.builtin.include_tasks: podman/install_service.yml
+  vars:
+    spec:
+      state: started
+      service_name: v11y-walker
+      network: "{{ tpa_single_node_podman_network }}"
+      manifest_file: "{{ role_path }}/templates/manifests/v11y/walker/Deployment.yaml.j2"
+      kube_file: "{{ role_path }}/templates/systemd/default.kube.j2"
 
 # Here we build a container only for the cronjob using trustification as a base image and adding cronie package
 
