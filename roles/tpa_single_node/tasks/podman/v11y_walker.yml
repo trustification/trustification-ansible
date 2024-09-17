@@ -37,7 +37,7 @@
 #  @TODO remove v11-walker from /etc/cron.d after the podman build
 
 - name: Deploy v11walker Pod
-  ansible.builtin.include_tasks: podman/install_service.yml
+  ansible.builtin.include_tasks: podman/install_manifest.yml
   vars:
     spec:
       state: started
