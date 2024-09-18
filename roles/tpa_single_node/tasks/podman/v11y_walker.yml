@@ -39,11 +39,11 @@
 - name: Deploy v11walker Pod
   ansible.builtin.include_tasks: podman/install_manifest.yml
   vars:
-    podman_spec:
+    spec:
       state: started
-      systemd_file: v11y-walker
-      network: "{{ tpa_single_node_podman_network }}"
-      kube_file_content: "{{ lookup('ansible.builtin.template', 'manifests/v11y/walker/Deployment.yaml') | from_yaml }}"
+      service_name: v11y-walker
+      manifest_file: "{{ role_path }}/templates/manifests/v11y/walker/Deployment.yaml.j2"
+      kube_file: "{{ role_path }}/templates/systemd/default.kube.j2"
 
 # Here we build a container only for the cronjob using trustification as a base image and adding cronie package
 

@@ -1,0 +1,18 @@
+[Unit]
+Description=Service for {{ spec.service_name }} Pod 
+Wants=network-online.target
+After=network-online.target
+
+[Kube]
+Yaml=/etc/rhtpa/manifests/{{ spec.service_name }}-Deployment.yaml
+
+[Service]
+NotifyAccess=all
+Restart=always
+RestartSec=10
+StartLimitInterval=0
+TimeoutStopSec=70
+Type=notify
+
+[Install]
+WantedBy=default.target
