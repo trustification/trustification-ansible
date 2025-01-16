@@ -272,7 +272,7 @@ objects:
         app.kubernetes.io/name: init-guac-db
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations:
@@ -305,7 +305,7 @@ objects:
         app.kubernetes.io/name: test
         app.kubernetes.io/component: testing
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations:
@@ -326,7 +326,7 @@ objects:
         app.kubernetes.io/name: init-dataset
         app.kubernetes.io/component: init
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations:
@@ -382,7 +382,7 @@ objects:
         app.kubernetes.io/name: init-guac-db
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations:
@@ -462,7 +462,7 @@ objects:
         app.kubernetes.io/name: guac-collectsub
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     spec:
@@ -489,7 +489,7 @@ objects:
         app.kubernetes.io/name: guac-graphql
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     spec:
@@ -521,7 +521,7 @@ objects:
         app.kubernetes.io/name: spog-ui-config
         app.kubernetes.io/component: branding
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -859,7 +859,7 @@ objects:
         app.kubernetes.io/name: spog-ui-branding
         app.kubernetes.io/component: branding
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     binaryData:
@@ -885,7 +885,7 @@ objects:
         app.kubernetes.io/name: bombastic-api-auth
         app.kubernetes.io/component: bombastic
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -905,7 +905,7 @@ objects:
         app.kubernetes.io/name: collector-osv-auth
         app.kubernetes.io/component: collector
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -925,7 +925,7 @@ objects:
         app.kubernetes.io/name: collectorist-api-auth
         app.kubernetes.io/component: collectorist
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -945,7 +945,7 @@ objects:
         app.kubernetes.io/name: collectorist-api
         app.kubernetes.io/component: collectorist
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -960,7 +960,7 @@ objects:
         app.kubernetes.io/name: spog-api-auth
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -980,7 +980,7 @@ objects:
         app.kubernetes.io/name: spog-ui-backend
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data: null
@@ -992,7 +992,7 @@ objects:
         app.kubernetes.io/name: v11y-api-auth
         app.kubernetes.io/component: v11y
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -1012,7 +1012,7 @@ objects:
         app.kubernetes.io/name: vexination-api-auth
         app.kubernetes.io/component: vexination
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     data:
@@ -1032,7 +1032,7 @@ objects:
         app.kubernetes.io/name: collectorist-api
         app.kubernetes.io/component: collectorist
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     spec:
@@ -1049,7 +1049,7 @@ objects:
         app.kubernetes.io/name: user-preferences-db-path
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     spec:
@@ -1066,7 +1066,7 @@ objects:
         app.kubernetes.io/name: v11y-walker
         app.kubernetes.io/component: v11y
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     spec:
@@ -1083,7 +1083,7 @@ objects:
         app.kubernetes.io/name: bombastic-api
         app.kubernetes.io/component: bombastic
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1106,7 +1106,7 @@ objects:
         app.kubernetes.io/name: collector-osv
         app.kubernetes.io/component: collector
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1129,7 +1129,7 @@ objects:
         app.kubernetes.io/name: collectorist-api
         app.kubernetes.io/component: collectorist
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1152,7 +1152,7 @@ objects:
         app.kubernetes.io/name: guac-collectsub
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1175,7 +1175,7 @@ objects:
         app.kubernetes.io/name: guac-graphql
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1198,7 +1198,7 @@ objects:
         app.kubernetes.io/name: spog-api
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1221,7 +1221,7 @@ objects:
         app.kubernetes.io/name: spog-ui
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1244,7 +1244,7 @@ objects:
         app.kubernetes.io/name: v11y-api
         app.kubernetes.io/component: v11y
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1267,7 +1267,7 @@ objects:
         app.kubernetes.io/name: vexination-api
         app.kubernetes.io/component: vexination
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1290,7 +1290,7 @@ objects:
         app.kubernetes.io/name: bombastic-api
         app.kubernetes.io/component: bombastic
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1399,7 +1399,7 @@ objects:
         app.kubernetes.io/name: bombastic-indexer
         app.kubernetes.io/component: bombastic
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1510,7 +1510,7 @@ objects:
         app.kubernetes.io/name: collector-osv
         app.kubernetes.io/component: collector
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1605,7 +1605,7 @@ objects:
         app.kubernetes.io/name: collectorist-api
         app.kubernetes.io/component: collectorist
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1708,7 +1708,7 @@ objects:
         app.kubernetes.io/name: bombastic-collector
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1786,7 +1786,7 @@ objects:
         app.kubernetes.io/name: guac-collectsub
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1831,7 +1831,7 @@ objects:
         app.kubernetes.io/name: guac-graphql
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -1936,7 +1936,7 @@ objects:
         app.kubernetes.io/name: vexination-collector
         app.kubernetes.io/component: guac
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2014,7 +2014,7 @@ objects:
         app.kubernetes.io/name: spog-api
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2131,7 +2131,7 @@ objects:
         app.kubernetes.io/name: spog-ui
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2219,7 +2219,7 @@ objects:
         app.kubernetes.io/name: v11y-api
         app.kubernetes.io/component: v11y
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2324,7 +2324,7 @@ objects:
         app.kubernetes.io/name: v11y-indexer
         app.kubernetes.io/component: v11y
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2435,7 +2435,7 @@ objects:
         app.kubernetes.io/name: vexination-api
         app.kubernetes.io/component: vexination
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2542,7 +2542,7 @@ objects:
         app.kubernetes.io/name: vexination-indexer
         app.kubernetes.io/component: vexination
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2653,7 +2653,7 @@ objects:
         app.kubernetes.io/name: v11y-walker
         app.kubernetes.io/component: v11y
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
     spec:
@@ -2749,7 +2749,7 @@ objects:
         app.kubernetes.io/name: bombastic-api
         app.kubernetes.io/component: bombastic
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
@@ -2774,7 +2774,7 @@ objects:
         app.kubernetes.io/name: spog-api
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations:
@@ -2800,7 +2800,7 @@ objects:
         app.kubernetes.io/name: spog-ui
         app.kubernetes.io/component: spog
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations:
@@ -2826,7 +2826,7 @@ objects:
         app.kubernetes.io/name: vexination-api
         app.kubernetes.io/component: vexination
         app.kubernetes.io/instance: redhat-trusted-profile-analyzer
-        app.kubernetes.io/version: 1.2.0
+        app.kubernetes.io/version: 1.2.2
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/part-of: trusted-profile-analyzer
       annotations: null
