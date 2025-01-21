@@ -1,4 +1,4 @@
-## [1.2.2] - 2025-01-XX
+## [1.2.2] - 2025-01-21
 
 ### Release Summary
 - Updated Trustification and Guac images to 1.2.2
