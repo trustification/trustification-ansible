@@ -38,5 +38,3 @@
   args:
     apply:
       become: true
-
-
