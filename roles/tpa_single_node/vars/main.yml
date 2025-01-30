@@ -10,7 +10,7 @@ tpa_single_node_systemd_directory: /etc/systemd/system
 tpa_single_node_default_empty: ""
 
 # DB_SERVICE
-tpa_single_node_pg_install_enabled: false
+tpa_single_node_pg_install_enabled: true
 tpa_single_node_pg_host: "{{ lookup('env', 'TPA_PG_HOST') | default('192.168.121.60', true) }}"
 tpa_single_node_pg_port: 5432
 tpa_single_node_pg_db: guac
@@ -20,35 +20,6 @@ tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}"
 tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}"
 tpa_single_node_pg_ssl_mode: require
 
-# Storage Service
-tpa_single_node_storage_access_key: "{{ lookup('env', 'TPA_STORAGE_ACCESS_KEY') }}" # S3/minio root username
-tpa_single_node_storage_secret_key: "{{ lookup('env', 'TPA_STORAGE_SECRET_KEY') }}" # S3/minio root password
-tpa_single_node_storage_bombastic_bucket: bombastic-default # <bombastic storage bucket name>
-tpa_single_node_storage_v11y_bucket: v11y-default # <v11y storage bucket name>
-tpa_single_node_storage_vexination_bucket: vexination-default # <vexination storage bucket name>
-
-## Storage Service - Minio fields
-tpa_single_node_storage_endpoint: "{{ lookup('env', 'TPA_STORAGE_ENDPOINT') }}" # Minio storage URL pointing to API 9000
-
-# SQS_SERVICE
-tpa_single_node_event_access_key_id: "{{ lookup('env', 'TPA_EVENT_ACCESS_KEY_ID') }}" # Kafka Username or AWS SQS Access Key ID
-tpa_single_node_event_secret_access_key: "{{ lookup('env', 'TPA_EVENT_SECRET_ACCESS_KEY') }}" # Kafka password or AWS SQS Secret Access Key
-tpa_single_node_bombastic_topic_failed: bombastic-failed-default # Bombastic Events topic failed
-tpa_single_node_bombastic_topic_indexed: bombastic-indexed-default # Bombastic Events topic indexed
-tpa_single_node_bombastic_topic_stored: bombastic-stored-default # Bombastic Events topic stored
-tpa_single_node_vexination_topic_failed: vexination-failed-default # Vexination Events topic failed
-tpa_single_node_vexination_topic_indexed: vexination-indexed-default # Vexination Events topic indexed
-tpa_single_node_vexination_topic_stored: vexination-stored-default # Vexination Events topic stored
-tpa_single_node_v11y_topic_failed: v11y-failed-default # v11y Events topic failed
-tpa_single_node_v11y_topic_indexed: v11y-indexed-default # v11y Events topic indexed
-tpa_single_node_v11y_topic_stored: v11y-stored-default # v11y Events topic stored
-
-## SQS_SERVICE - Kafka fields
-tpa_single_node_kafka_bootstrap_servers: "{{ lookup('env', 'TPA_EVENT_BOOTSTRAP_SERVER') | default('tpa_single_node_default_empty', true) }}"
-# Security protocol used for Kafka user authentication.
-tpa_single_node_kafka_security_protocol: SASL_PLAINTEXT # Example - SASL_PLAINTEXT
-# Kafka Authentication Mechanism which is spec.kafka.listeners.authentication.type in Block letters.
-tpa_single_node_kafka_auth_mechanism: SCRAM-SHA-512 # Example - SCRAM-SHA-512
 
 # SSO_SERVICE
 tpa_single_node_oidc_issuer_url: "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('tpa_single_node_default_empty', true) }}"
@@ -74,20 +45,8 @@ tpa_single_node_event_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/e
 tpa_single_node_oidc_secret: "{{ tpa_single_node_kube_manifest_dir }}/Secrets/oidc.yaml"
 
 # ports
-tpa_single_node_spog_ui_port: 8080
-tpa_single_node_vexination_api_port: 8081
-tpa_single_node_bombastic_api_port: 8082
-tpa_single_node_spog_api_port: 8084
-tpa_single_node_collector_osv_port: 8085
-tpa_single_node_v11y_api_port: 8087
-tpa_single_node_collectorist_api_port: 8088
-tpa_single_node_guac_graphql_port: 8089
 
 # Services suspended
-tpa_single_node_bombastic_walker_suspended: true
-tpa_single_node_dataset_job_suspended: true
-tpa_single_node_vexination_walker_suspended: true
-tpa_single_node_v11y_walker_suspended: false
 
 # Probes
 tpa_single_node_probe_initial_delay_seconds: 30
