@@ -20,32 +20,6 @@ tpa_single_node_pg_user: "{{ lookup('env', 'TPA_PG_USER') }}"
 tpa_single_node_pg_user_passwd: "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}"
 tpa_single_node_pg_ssl_mode: require
 
-# Storage Service
-tpa_single_node_storage_type: s3
-tpa_single_node_storage_access_key: "{{ lookup('env', 'TPA_STORAGE_ACCESS_KEY') }}" # AWS Access Key ID
-tpa_single_node_storage_secret_key: "{{ lookup('env', 'TPA_STORAGE_SECRET_KEY') }}" # AWS Secret Access Key
-tpa_single_node_storage_bombastic_bucket: bombastic-rhtpa
-tpa_single_node_storage_v11y_bucket: v11y-rhtpa
-tpa_single_node_storage_vexination_bucket: vexination-rhtpa
-tpa_single_node_storage_region: us-west-1
-
-# SQS_SERVICE
-tpa_single_node_event_bus_type: sqs
-tpa_single_node_event_access_key_id: "{{ lookup('env', 'TPA_EVENT_ACCESS_KEY_ID') }}" # AWS Access Key ID
-tpa_single_node_event_secret_access_key: "{{ lookup('env', 'TPA_EVENT_SECRET_ACCESS_KEY') }}" # AWS Secret Access Key
-tpa_single_node_bombastic_topic_failed: bombastic-failed-rhtpa
-tpa_single_node_bombastic_topic_indexed: bombastic-indexed-rhtpa
-tpa_single_node_bombastic_topic_stored: bombastic-stored-rhtpa
-tpa_single_node_vexination_topic_failed: vexination-failed-rhtpa
-tpa_single_node_vexination_topic_indexed: vexination-indexed-rhtpa
-tpa_single_node_vexination_topic_stored: vexination-stored-rhtpa
-tpa_single_node_v11y_topic_failed: v11y-failed-rhtpa
-tpa_single_node_v11y_topic_indexed: v11y-indexed-rhtpa
-tpa_single_node_v11y_topic_stored: v11y-stored-rhtpa
-
-## SQS_SERVICE - AWS SQS fields
-tpa_single_node_sqs_region: us-west-1
-
 # SSO_SERVICE
 tpa_single_node_oidc_issuer_url: "{{ lookup('env', 'TPA_OIDC_ISSUER_URL') | default('tpa_single_node_default_empty', true) }}"
 tpa_single_node_oidc_frontend_id: "{{ lookup('env', 'TPA_OIDC_FRONTEND_ID') | default('tpa_single_node_default_empty', true) }}"
