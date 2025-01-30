@@ -9,9 +9,6 @@
 - name: Configure OIDC
   ansible.builtin.include_tasks: infra/oidc.yml
 
-- name: Configure Storage
-  ansible.builtin.include_tasks: infra/storage.yml
-
 - name: Configure Trust Anchor
   ansible.builtin.include_tasks: infra/trust_anchor.yml
 
