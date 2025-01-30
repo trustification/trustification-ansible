@@ -165,18 +165,11 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "/etc/rhtpa/manifests/storage-secret.yaml"
-
       tpa_single_node_oidc_secret:
         description: "oidc-secret.yaml path on the target machine"
         type: "str"
         version_added: "2.0.0"
         default: "/etc/rhtpa/manifests/oidc-secret.yaml"
-
-
-
-
-
-
       tpa_single_node_probe_initial_delay_seconds:
         description: "Initial prob delay in seconds"
         type: "int"
