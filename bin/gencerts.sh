@@ -38,13 +38,13 @@ C  = US
 ST = North Carolina
 L  = Raleigh
 O  = Red Hat Inc.
-CN = 192.168.121.60  # Replace with your IP address
+CN = 192.168.56.0  # Replace with your IP address
 
 [ req_ext ]
 subjectAltName = @alt_names
 
 [ alt_names ]
-IP.1 = 192.168.121.60  # Replace with your IP address
+IP.1 = 192.168.56.0  # Replace with your IP address
 EOF
 
 

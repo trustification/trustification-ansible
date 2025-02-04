@@ -95,16 +95,6 @@ argument_specs:
         type: "str"
         version_added: "2.0.0"
         default: "disable"
-      tpa_single_node_storage_access_key:
-        description: "Storage access key, readed form the env var TPA_STORAGE_ACCESS_KEY."
-        type: "str"
-        required: true
-        version_added: "2.0.0"
-      tpa_single_node_storage_secret_key:
-        description: "Storage access key, readed form the env var TPA_STORAGE_SECRET_KEY."
-        type: "str"
-        required: true
-        version_added: "2.0.0"
       tpa_single_node_oidc_type:
         description: "Keycloak or AWS Cognito"
         type: "str"
