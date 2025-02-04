@@ -48,9 +48,3 @@
   ansible.builtin.command:
     cmd: "podman pull {{ tpa_single_node_trustification_image }}"
   changed_when: false
-
-- name: Pull Guac image from registry.redhat.io
-  when: rhel
-  ansible.builtin.command:
-    cmd: "podman pull {{ tpa_single_node_guac_image }}"
-  changed_when: false
