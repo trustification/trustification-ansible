@@ -3,7 +3,6 @@
 
 ### Minor Changes
 - TC-1886 Sbom license scanner backend
-- TC-1901 Licenses Download from Single SBOM
 - TC-2117 Update Filters from 2023,2022 to 2024, 2023
 
 ### Security Fixes
