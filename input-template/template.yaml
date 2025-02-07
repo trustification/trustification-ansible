@@ -1,0 +1,651 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: trustification
+objects:
+  - NAME: redhat-trusted-profile-analyzer
+    LAST DEPLOYED: Fri Feb  7 19:31:45 2025
+    NAMESPACE: trustify
+    STATUS: pending-install
+    REVISION: 1
+    TEST SUITE: None
+    USER-SUPPLIED VALUES: null
+    appDomain: change-me
+    createDatabase:
+      name: postgres
+      password:
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: infrastructure-postgresql
+      username: postgres
+    database:
+      host: infrastructure-postgresql
+      name: trustify
+      password: trustify1234
+      port: '5432'
+      username: trustify
+    ingress:
+      className: openshift-default
+    keycloak:
+      auth:
+        adminPassword: admin123456
+        adminUser: admin
+      containerSecurityContext:
+        enabled: false
+      enabled: true
+      ingress:
+        annotations:
+          route.openshift.io/termination: reencrypt
+        enabled: true
+        ingressClassName: openshift-default
+        servicePort: https
+      podSecurityContext:
+        enabled: false
+      postgresql:
+        primary:
+          containerSecurityContext:
+            enabled: false
+          podSecurityContext:
+            enabled: false
+          resourcesPreset: large
+      production: true
+      proxy: reencrypt
+      resourcesPreset: large
+      service:
+        annotations:
+          service.beta.openshift.io/serving-cert-secret-name: sso-tls
+      tls:
+        enabled: true
+        existingSecret: sso-tls
+        usePem: true
+    migrateDatabase:
+      password:
+        valueFrom:
+          secretKeyRef:
+            key: postgres-password
+            name: infrastructure-postgresql
+      username: postgres
+    modules:
+      createDatabase:
+        enabled: true
+        image:
+          name: postgres
+          registry: docker.io/library
+          version: '16.0'
+      createImporters:
+        enabled: false
+        image:
+          name: postgres
+          registry: docker.io/library
+          version: '16.0'
+        importers: {}
+      importer:
+        enabled: true
+        image: {}
+        infrastructure: {}
+        metrics: {}
+        rust: {}
+        tracing: {}
+        workingDirectory:
+          size: 32Gi
+      migrateDatabase:
+        enabled: true
+        image: {}
+      server:
+        enabled: true
+        image: {}
+        infrastructure: {}
+        ingress: {}
+        metrics: {}
+        rust: {}
+        tracing: {}
+    oidc:
+      clients:
+        cli:
+          clientSecret:
+            value: 5460cc91-4e20-4edd-881c-b15b169f8a79
+        frontend: {}
+        testingManager:
+          clientSecret:
+            value: ca48053c-3b82-4650-a98d-4cace7f2d567
+        testingUser:
+          clientSecret:
+            value: 0e6bf990-43b4-4efb-95d7-b24f2b94a525
+    postgresql:
+      enabled: false
+    storage:
+      size: 32Gi
+      type: filesystem
+    COMPUTED VALUES: null
+    image:
+      name: rhtpa-konflux-0-2-z
+      pullPolicy: IfNotPresent
+      registry: #server-image
+      version: 0bef82c8139cc89ef4840e36ad519ca24bb54f70
+    infrastructure:
+      port: 9010
+    metrics:
+      enabled: false
+    openshift:
+      useServiceCa: true
+    partOf: trustify
+    replicas: 1
+    rust: {}
+    serviceMonitor:
+      enabled: false
+    tls: {}
+    tracing:
+      collector: ''
+      enabled: false
+    HOOKS: null
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: create-db
+      labels:
+        app.kubernetes.io/name: create-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations:
+        argocd.argoproj.io/hook: Sync
+        argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+        argocd.argoproj.io/sync-wave: '0'
+        helm.sh/hook-weight: '5'
+        helm.sh/hook: pre-install,pre-upgrade
+        helm.sh/hook-delete-policy: before-hook-creation
+    data:
+      init.sql: "-- ensure we have the database\nSELECT 'CREATE DATABASE ' || :'db_name'\n\
+        WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = :'db_name')\\gexec\n\
+        \n-- create the user (if it doesn't exist)\nCREATE OR REPLACE FUNCTION add_user_if_not_exists(username\
+        \ NAME) RETURNS integer\n    AS $$\nBEGIN\n    IF NOT EXISTS (SELECT FROM\
+        \ pg_roles\n        WHERE rolname = username) THEN\n\n        EXECUTE FORMAT('CREATE\
+        \ ROLE \"%I\" LOGIN', username);\n\n    END IF;\n    RETURN NULL;\nEND;\n\
+        $$ language plpgsql;\n\nSELECT add_user_if_not_exists(:'db_user');\n\n-- now\
+        \ set the password\nALTER USER :db_user WITH PASSWORD :'db_password';\n\n\
+        -- grant permission to connect\nGRANT CONNECT ON DATABASE :db_name TO :db_user;\n\
+        \n-- grant permissions on database\n\\connect :db_name\n\nGRANT USAGE ON SCHEMA\
+        \ public TO :db_user;\n\n-- grant on existing tables\nGRANT SELECT, INSERT,\
+        \ UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO :db_user;\n\n-- grant on\
+        \ future tables\nALTER DEFAULT PRIVILEGES\n    IN SCHEMA public\n    GRANT\
+        \ SELECT, INSERT, UPDATE, DELETE ON TABLES TO :db_user;\n"
+  - kind: Job
+    apiVersion: batch/v1
+    metadata:
+      name: create-db
+      labels:
+        app.kubernetes.io/name: create-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations:
+        argocd.argoproj.io/hook: Sync
+        argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+        argocd.argoproj.io/sync-wave: '0'
+        helm.sh/hook-weight: '5'
+        helm.sh/hook: pre-install,pre-upgrade
+        helm.sh/hook-delete-policy: before-hook-creation
+    spec:
+      backoffLimit: 1000
+      completions: 1
+      parallelism: 1
+      ttlSecondsAfterFinished: 600
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: create-db
+            app.kubernetes.io/component: database
+            app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        spec:
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: create-db
+                      app.kubernetes.io/component: database
+                      app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+          volumes:
+            - name: init-data
+              configMap:
+                name: create-db
+          containers:
+            - name: job
+              image: docker.io/library/postgres:16.0
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: PGHOST
+                  value: infrastructure-postgresql
+                - name: PGPORT
+                  value: '5432'
+                - name: PGDATABASE
+                  value: postgres
+                - name: PGUSER
+                  value: postgres
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: postgres-password
+                      name: infrastructure-postgresql
+                - name: PGSSLMODE
+                  value: allow
+                - name: DB_NAME
+                  value: trustify
+                - name: DB_USERNAME
+                  value: trustify
+                - name: DB_PASSWORD
+                  value: trustify1234
+              volumeMounts:
+                - mountPath: /etc/init-data
+                  name: init-data
+              command:
+                - psql
+                - --echo-all
+                - -v
+                - ON_ERROR_STOP=1
+                - -v
+                - db_name=$(DB_NAME)
+                - -v
+                - db_user=$(DB_USERNAME)
+                - -v
+                - db_password=$(DB_PASSWORD)
+                - -f
+                - /etc/init-data/init.sql
+  - kind: Job
+    apiVersion: batch/v1
+    metadata:
+      name: migrate-db
+      labels:
+        app.kubernetes.io/name: migrate-db
+        app.kubernetes.io/component: database
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations:
+        argocd.argoproj.io/hook: Sync
+        argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+        argocd.argoproj.io/sync-wave: '3'
+        helm.sh/hook-weight: '20'
+        helm.sh/hook: pre-install,pre-upgrade
+        helm.sh/hook-delete-policy: before-hook-creation
+    spec:
+      backoffLimit: 1000
+      completions: 1
+      parallelism: 1
+      ttlSecondsAfterFinished: 600
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: migrate-db
+            app.kubernetes.io/component: database
+            app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        spec:
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: migrate-db
+                      app.kubernetes.io/component: database
+                      app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+          volumes: null
+          containers:
+            - name: job
+              image: quay.io/redhat-user-workloads/trusted-content-tenant/rhtpa-konflux-0-2-z:0bef82c8139cc89ef4840e36ad519ca24bb54f70
+              imagePullPolicy: IfNotPresent
+              env:
+                - name: TRUSTD_DB_HOST
+                  value: infrastructure-postgresql
+                - name: TRUSTD_DB_PORT
+                  value: '5432'
+                - name: TRUSTD_DB_NAME
+                  value: trustify
+                - name: TRUSTD_DB_USER
+                  value: postgres
+                - name: TRUSTD_DB_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      key: postgres-password
+                      name: infrastructure-postgresql
+                - name: TRUSTD_DB_SSLMODE
+                  value: allow
+              volumeMounts: null
+              command:
+                - trustd
+                - db
+                - migrate
+    MANIFEST: null
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: server-auth
+      labels:
+        app.kubernetes.io/name: server-auth
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+    data:
+      auth.yaml: "\nauthentication:\n  clients:\n\n    - clientId: frontend\n    \
+        \  issuerUrl: https://ssochange-me/realms/chicken\n      scopeMappings: &keycloakScopeMappings\n\
+        \        \"create:document\": [ \"create.advisory\", \"create.importer\",\
+        \ \"create.metadata\", \"create.sbom\", \"create.weakness\", \"upload.dataset\"\
+        \ ]\n        \"read:document\": [ \"ai\", \"read.advisory\", \"read.importer\"\
+        , \"read.metadata\", \"read.sbom\", \"read.weakness\" ]\n        \"update:document\"\
+        : [ \"update.advisory\", \"update.importer\", \"update.metadata\", \"update.sbom\"\
+        , \"update.weakness\" ]\n        \"delete:document\": [ \"delete.advisory\"\
+        , \"delete.importer\", \"delete.metadata\", \"delete.sbom\", \"delete.vulnerability\"\
+        , \"delete.weakness\" ]\n\n    - clientId: cli\n      issuerUrl: https://ssochange-me/realms/chicken\n\
+        \      scopeMappings: *keycloakScopeMappings\n"
+  - kind: PersistentVolumeClaim
+    apiVersion: v1
+    metadata:
+      name: storage
+      labels:
+        app.kubernetes.io/name: storage
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 32Gi
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: server
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations:
+        service.beta.openshift.io/serving-cert-secret-name: server-tls
+    spec:
+      ports:
+        - name: endpoint
+          port: 443
+          protocol: TCP
+          targetPort: endpoint
+      selector:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+      type: ClusterIP
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: server
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations: null
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: server
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: server
+            app.kubernetes.io/component: server
+            app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+          annotations:
+            configHash/auth: 00dcd063229b579d099af4c8ea2cb7829e20de8ad7034b4a072965c6b762f4eb
+        spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: server
+                      app.kubernetes.io/component: server
+                      app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+          containers:
+            - name: service
+              image: #server-image
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                initialDelaySeconds: 2
+                httpGet:
+                  path: /health/live
+                  port: 9010
+              readinessProbe:
+                initialDelaySeconds: 2
+                httpGet:
+                  path: /health/ready
+                  port: 9010
+              command:
+                - /usr/local/bin/trustd
+              args:
+                - api
+                - --auth-configuration
+                - /etc/config/auth.yaml
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: RUST_LOG
+                  value: info
+                - name: INFRASTRUCTURE_ENABLED
+                  value: 'true'
+                - name: INFRASTRUCTURE_BIND
+                  value: '[::]:9010'
+                - name: HTTP_SERVER_BIND_ADDR
+                  value: '::'
+                - name: HTTP_SERVER_TLS_ENABLED
+                  value: 'true'
+                - name: HTTP_SERVER_TLS_KEY_FILE
+                  value: /etc/tls/tls.key
+                - name: HTTP_SERVER_TLS_CERTIFICATE_FILE
+                  value: /etc/tls/tls.crt
+                - name: TRUSTD_DB_HOST
+                  value: infrastructure-postgresql
+                - name: TRUSTD_DB_PORT
+                  value: '5432'
+                - name: TRUSTD_DB_NAME
+                  value: trustify
+                - name: TRUSTD_DB_USER
+                  value: trustify
+                - name: TRUSTD_DB_PASSWORD
+                  value: trustify1234
+                - name: TRUSTD_DB_SSLMODE
+                  value: allow
+                - name: TRUSTD_STORAGE_STRATEGY
+                  value: fs
+                - name: TRUSTD_STORAGE_FS_PATH
+                  value: /data/storage
+                - name: SWAGGER_UI_OIDC_ISSUER_URL
+                  value: https://ssochange-me/realms/chicken
+                - name: SWAGGER_UI_OIDC_CLIENT_ID
+                  value: frontend
+                - name: UI_ISSUER_URL
+                  value: https://ssochange-me/realms/chicken
+                - name: UI_CLIENT_ID
+                  value: frontend
+              ports:
+                - containerPort: 9010
+                  protocol: TCP
+                  name: infra
+                - containerPort: 8080
+                  name: endpoint
+                  protocol: TCP
+              volumeMounts:
+                - mountPath: /etc/tls
+                  name: tls
+                  readOnly: true
+                - name: config-auth
+                  mountPath: /etc/config/auth.yaml
+                  subPath: auth.yaml
+                - name: storage
+                  mountPath: /data/storage
+          volumes:
+            - name: tls
+              secret:
+                secretName: server-tls
+            - name: config-auth
+              configMap:
+                name: server-auth
+            - name: storage
+              persistentVolumeClaim:
+                claimName: storage
+  - apiVersion: apps/v1
+    kind: StatefulSet
+    metadata:
+      name: importer
+      labels:
+        app.kubernetes.io/name: importer
+        app.kubernetes.io/component: importer
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations: null
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/name: importer
+          app.kubernetes.io/component: importer
+          app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: importer
+            app.kubernetes.io/component: importer
+            app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        spec:
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: kubernetes.io/hostname
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: importer
+                      app.kubernetes.io/component: importer
+                      app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+          containers:
+            - name: service
+              image: #server-image
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                initialDelaySeconds: 2
+                httpGet:
+                  path: /health/live
+                  port: 9010
+              readinessProbe:
+                initialDelaySeconds: 2
+                httpGet:
+                  path: /health/ready
+                  port: 9010
+              command:
+                - /usr/local/bin/trustd
+              args:
+                - importer
+                - --working-dir
+                - /data/workdir
+              env:
+                - name: NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+                - name: RUST_LOG
+                  value: info
+                - name: INFRASTRUCTURE_ENABLED
+                  value: 'true'
+                - name: INFRASTRUCTURE_BIND
+                  value: '[::]:9010'
+                - name: TRUSTD_DB_HOST
+                  value: infrastructure-postgresql
+                - name: TRUSTD_DB_PORT
+                  value: '5432'
+                - name: TRUSTD_DB_NAME
+                  value: trustify
+                - name: TRUSTD_DB_USER
+                  value: trustify
+                - name: TRUSTD_DB_PASSWORD
+                  value: trustify1234
+                - name: TRUSTD_DB_SSLMODE
+                  value: allow
+                - name: TRUSTD_STORAGE_STRATEGY
+                  value: fs
+                - name: TRUSTD_STORAGE_FS_PATH
+                  value: /data/storage
+              ports:
+                - containerPort: 9010
+                  protocol: TCP
+                  name: infra
+              volumeMounts:
+                - name: workdir
+                  mountPath: /data/workdir
+                - name: storage
+                  mountPath: /data/storage
+          volumes:
+            - name: storage
+              persistentVolumeClaim:
+                claimName: storage
+      volumeClaimTemplates:
+        - metadata:
+            name: workdir
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 32Gi
+  - apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: server
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+        app.kubernetes.io/version: 2.0.0
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/part-of: trustify
+      annotations:
+        route.openshift.io/termination: reencrypt
+    spec:
+      ingressClassName: openshift-default
+      rules:
+        - host: serverchange-me
+          http:
+            paths:
+              - pathType: Prefix
+                path: /
+                backend:
+                  service:
+                    name: server
+                    port:
+                      name: endpoint
+    NOTES: null
+    OpenShift:
+      Detected: true
+      Use Service CA: true
+    Console: serverchange-me
