@@ -14,8 +14,3 @@
     apply:
       become: true
 
-#- name: Configure oidc
-#  ansible.builtin.include_tasks: infra/oidc.yml
-#  args:
-#    apply:
-#      become: true
