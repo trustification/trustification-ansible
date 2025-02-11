@@ -1,0 +1,25 @@
+---
+- name: Copy init-db.sql to Server
+  ansible.builtin.copy:
+    content: "{{ lookup('ansible.builtin.template', 'configs/init-db.sql') }}"
+    dest: "{{ tpa_single_node_config_dir }}/init-db.sql"
+    remote_src: true
+    mode: "0600"
+
+- name: Run init-db.sql
+  ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_admin }}:{{ tpa_single_node_pg_admin_passwd }}@\
+      {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }} \
+      -v ON_ERROR_STOP=1 \
+      -v db_name={{ tpa_single_node_pg_db }} \
+      -v db_user={{ tpa_single_node_pg_user }} \
+      -v db_password={{ tpa_single_node_pg_user_passwd }} \
+      -f {{ tpa_single_node_config_dir }}/init-db.sql"
+  changed_when: false
+  no_log: true
+
+- name: Testing DB to make sure it is available
+  ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_user }}:{{ tpa_single_node_pg_user_passwd }}@\
+    {{ tpa_single_node_pg_host }}:{{ tpa_single_node_pg_port }}/{{ tpa_single_node_pg_db }} -c 'SELECT 1'"
+  register: select_output
+  changed_when: false
+  no_log: true
