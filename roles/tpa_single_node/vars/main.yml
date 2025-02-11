@@ -18,7 +18,7 @@ tpa_single_node_pg_db: trustify
 tpa_single_node_pg_admin: postgres # "{{ lookup('env', 'TPA_PG_ADMIN') }}" # postgres
 tpa_single_node_pg_admin_passwd: trustify # "{{ lookup('env', 'TPA_PG_ADMIN_PASSWORD') }}" #trustify
 tpa_single_node_pg_user: postgres # "{{ lookup('env', 'TPA_PG_USER') }}" #postgres
-tpa_single_node_pg_user_passwd: trustify #"{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}" # trustify
+tpa_single_node_pg_user_passwd: trustify # "{{ lookup('env', 'TPA_PG_USER_PASSWORD') }}" # trustify
 tpa_single_node_pg_ssl_mode: required
 
 # SSO_SERVICE
