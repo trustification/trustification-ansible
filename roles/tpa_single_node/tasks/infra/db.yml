@@ -15,7 +15,7 @@
       -v db_password={{ tpa_single_node_pg_user_passwd }} \
       -f {{ tpa_single_node_config_dir }}/init-db.sql"
   changed_when: false
-  # no_log: true
+  no_log: true
 
 - name: Testing DB to make sure it is available
   ansible.builtin.command: "psql postgresql://{{ tpa_single_node_pg_user }}:{{ tpa_single_node_pg_user_passwd }}@\
