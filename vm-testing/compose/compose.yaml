@@ -41,7 +41,7 @@ services:
     command: /init-sso/init.sh
 
   postgres:
-    image: docker.io/library/postgres:16
+    image: docker.io/library/postgres:17
     ports:
       - "5432:5432"
     environment:
