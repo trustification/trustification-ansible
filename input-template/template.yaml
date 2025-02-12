@@ -301,7 +301,7 @@ objects:
           volumes: null
           containers:
             - name: job
-              image: quay.io/redhat-user-workloads/trusted-content-tenant/rhtpa-konflux-0-2-z:0bef82c8139cc89ef4840e36ad519ca24bb54f70
+              image: registry.redhat.io/rhtpa/rhtpa-trustification-service-rhel:0bef82c8139cc89ef4840e36ad519ca24bb54f70
               imagePullPolicy: IfNotPresent
               env:
                 - name: TRUSTD_DB_HOST

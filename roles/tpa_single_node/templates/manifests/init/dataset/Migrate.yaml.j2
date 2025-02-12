@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: migrate-db
+  namespace: "{{ tpa_single_node_namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: migrate-db
+  template:
+    metadata:
+      labels:
+        app: migrate-db
+    spec:
+      restartPolicy: OnFailure
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: kubernetes.io/hostname
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: migrate-db
+                  app.kubernetes.io/component: database
+                  app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+      containers:
+        - name: run
+          image: "{{ tpa_single_node_trustification_image }}"
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TRUSTD_DB_HOST
+              value: "{{ tpa_single_node_oidc_provider_client_id }}"
+            - name: TRUSTD_DB_PORT
+              value: "{{ tpa_single_node_pg_port }}"
+            - name: TRUSTD_DB_NAME
+              value: "{{ tpa_single_node_pg_db }}"
+            - name: TRUSTD_DB_USER
+              value: "{{ tpa_single_node_pg_user }}"
+            - name: TRUSTD_DB_PASSWORD
+              value: "{{  tpa_single_node_pg_user_passwd }}"
+            - name: TRUSTD_DB_SSLMODE
+              value: allow
+          command:
+            - trustd
+            - db
+            - migrate
