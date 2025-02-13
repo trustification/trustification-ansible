@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+  namespace: "{{ tpa_single_node_namespace }}"
+  labels:
+    app: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: server
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/component: server
+        app.kubernetes.io/instance: redhat-trusted-profile-analyzer
+    spec:
+      containers:
+        - name: service
+          image: "{{ tpa_single_node_trustification_image }}"
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            initialDelaySeconds: 2
+            httpGet:
+              path: /health/live
+              port: 9010
+          readinessProbe:
+            initialDelaySeconds: 2
+            httpGet:
+              path: /health/ready
+              port: 9010
+          command:
+            - /usr/local/bin/trustd
+          args:
+            - api
+            - --auth-configuration
+            - /etc/config/auth.yaml
+          env:
+            - name: NAMESPACE
+              value: "{{ tpa_single_node_namespace }}"
+            - name: RUST_LOG
+              value: info
+            - name: INFRASTRUCTURE_ENABLED
+              value: 'true'
+            - name: INFRASTRUCTURE_BIND
+              value: '[::]:9010'
+            - name: HTTP_SERVER_BIND_ADDR
+              value: '::'
+            - name: HTTP_SERVER_TLS_ENABLED
+              value: 'true'
+            - name: HTTP_SERVER_TLS_KEY_FILE
+              value: /etc/tls/tls.key
+            - name: HTTP_SERVER_TLS_CERTIFICATE_FILE
+              value: /etc/tls/tls.crt
+            - name: TRUSTD_DB_HOST
+              value: "{{ tpa_single_node_pg_host }}"
+            - name: TRUSTD_DB_PORT
+              value:  "{{ tpa_single_node_pg_port }}"
+            - name: TRUSTD_DB_NAME
+              value: "{{ tpa_single_node_pg_db }}"
+            - name: TRUSTD_DB_USER
+              value: "{{ tpa_single_node_pg_user }}"
+            - name: TRUSTD_DB_PASSWORD
+              value: "{{  tpa_single_node_pg_user_passwd }}"
+            - name: TRUSTD_DB_SSLMODE
+              value: allow
+            - name: TRUSTD_STORAGE_STRATEGY
+              value: fs
+            - name: TRUSTD_STORAGE_FS_PATH
+              value: /data/storage
+            - name: SWAGGER_UI_OIDC_ISSUER_URL
+              value: https://ssochange-me/realms/chicken
+            - name: SWAGGER_UI_OIDC_CLIENT_ID
+              value: frontend
+            - name: UI_ISSUER_URL
+              value: https://ssochange-me/realms/chicken
+            - name: UI_CLIENT_ID
+              value: frontend
+          ports:
+            - containerPort: 9010
+              protocol: TCP
+              name: infra
+            - containerPort: 8080
+              name: endpoint
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /etc/tls
+              name: tls
+              readOnly: true
+            - name: config-auth
+              mountPath: /etc/config/auth.yaml
+              subPath: auth.yaml
+            - name: storage
+              mountPath: /data/storage
+      volumes:
+        - name: tls
+          secret:
+            secretName: server-tls
+        - name: config-auth
+          configMap:
+            name: server-auth
+        - name: storage
+          persistentVolumeClaim:
+            claimName: storage

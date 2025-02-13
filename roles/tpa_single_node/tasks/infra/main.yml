@@ -2,16 +2,33 @@
 - name: Configure OIDC
   ansible.builtin.include_tasks: infra/oidc.yml
 
+# - name: Configure Trust anchor
 #   ansible.builtin.include_tasks: infra/trust_anchor.yml
 
 # - name: Configure TLS certs
 #   ansible.builtin.include_tasks: infra/tls_cert.yml
 
+- name: Configure Server TLS certs
+  ansible.builtin.include_tasks: infra/server_tls.yml
+
 - name: Configure db
   ansible.builtin.include_tasks: infra/db.yml
-  args:
-    apply:
-      become: true
 
 - name: Migrate db
   ansible.builtin.include_tasks: infra/migrate-db.yml
+
+- name: Create configmap auth for server
+  ansible.builtin.include_tasks: infra/component_auth.yml
+  vars:
+    component:
+      name: "server"
+      type: "api"
+
+- name: Generate Persistent Volume Claim for server
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/manifests/server/PersistentVolumeClaim.yaml.j2"
+    dest: "{{ tpa_single_node_kube_manifest_dir }}/PVCs/server.yaml"
+    mode: "0600"
+
+- name: Start Server
+  ansible.builtin.include_tasks: server/trustd.yml

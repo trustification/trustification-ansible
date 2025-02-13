@@ -1,0 +1,14 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: storage
+  namespace: "{{ tpa_single_node_namespace }}"
+  labels:
+    app: rhtpa
+    component: server
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Gi
