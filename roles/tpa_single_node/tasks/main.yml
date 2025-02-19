@@ -3,11 +3,11 @@
   ansible.builtin.set_fact:
     tpa_single_node_rhel_host: "{{ ansible_ssh_host }}"
 
-- name: Set a variable about Rhel
+- name: Set a variable about RHEL
   ansible.builtin.set_fact:
     rhel: false
 
-- name: Set a variable if is a Rhel as expected
+- name: Set a variable if is a RHEL as expected
   ansible.builtin.set_fact:
     rhel: true
   when:

@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: TRUSTD_DB_HOST
-              value: "{{ tpa_single_node_oidc_provider_client_id }}"
+              value: "{{ tpa_single_node_pg_host }}"
             - name: TRUSTD_DB_PORT
               value: "{{ tpa_single_node_pg_port }}"
             - name: TRUSTD_DB_NAME
