@@ -3,7 +3,7 @@
   vars:
     # V1.3.1
     tpa_single_node_trustification_image: registry.redhat.io/rhtpa/rhtpa-trustification-service-rhel9:cc6cfb76a7f57ae8f84fa330c11f4d82effe1fe8 # noqa yaml[line-length]
-    tpa_single_node_guac_image: registry.redhat.io/rhtpa/rhtpa-guac-rhel9:5ca3b90a41946a8bbc93db81e89e8ab925aabcfe
+    tpa_single_node_guac_image: registry.redhat.io/rhtpa/rhtpa-guac-rhel9:c49a4f6aa3d2fdeeaa78dca9041e79c52fe5caa2
   vars_files:
     - vars/main.yml
   tasks:
