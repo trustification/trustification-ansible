@@ -1,6 +1,6 @@
 argument_specs:
   main:
-    short_description: "Configure Red Hat Trusted Profile Analyzer Signer (RHTPA) on a single managed node."
+    short_description: "Configure Red Hat Trusted Profile Analyzer (RHTPA) on a single managed node."
     description: >
       Deploy the [RHTPA](https://docs.redhat.com/en/documentation/red_hat_trusted_profile_analyzer/) service
       on a single managed node by using the `tpa_single_node` role.
