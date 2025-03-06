@@ -1,3 +1,6 @@
+## [1.3.1] - 2025-03-00
+- Updated Trustification image to 1.3.1
+
 ## [1.3.0] - 2025-02-06
 - Updated Trustification image to 1.3.0
 
