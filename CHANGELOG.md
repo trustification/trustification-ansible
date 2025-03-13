@@ -1,7 +1,21 @@
-## [1.3.1] - 2025-03-00
+## [1.3.1] - 2025-03-13
 - Updated Trustification image to 1.3.1
 
+### Minor Changes
+
+### Bugfixes
+- TC-2089 Tpa version on Spog UI is not updated
+- TC-2220 SBOM with chain of relations breaks the Vulnerabilities retrieval
+- TC-1878 API error: Error Contacting GUAC occurs on Package details page and Search results screen
+- TC-1935 Recreate strategy is missing for spog-api and collectorist-api
+- TC-2103 Mismatching count of CVE between Dashboard and CVE panel or SBOM Vulnerabilities
+- TC-2219 When changing zoom in the Home screen, the pie charts are overlapping their boarders
+- TC-2247 In the SBOM dashboard on Home page, the legend value 'Unknown' is displayed as 'None' in the bottom pie charts legends
+- TC-2280 SBOM cyclic dependency management
+- TC-2279 CycloneDX SBOM appears multiple times if the root component has hashes
+
 ## [1.3.0] - 2025-02-06
+### Release Summary
 - Updated Trustification image to 1.3.0
 
 ### Minor Changes
