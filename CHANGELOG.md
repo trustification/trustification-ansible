@@ -1,4 +1,4 @@
-## [1.3.1] - 2025-03-00
+## [1.3.1] - 2025-03-13
 - Updated Trustification image to 1.3.1
 
 ### Minor Changes
@@ -12,6 +12,7 @@
 - TC-2219 When changing zoom in the Home screen, the pie charts are overlapping their boarders
 - TC-2247 In the SBOM dashboard on Home page, the legend value 'Unknown' is displayed as 'None' in the bottom pie charts legends
 - TC-2280 SBOM cyclic dependency management
+- TC-2279 CycloneDX SBOM appears multiple times if the root component has hashes
 
 ## [1.3.0] - 2025-02-06
 ### Release Summary
