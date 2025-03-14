@@ -1,4 +1,5 @@
 ## [1.3.1] - 2025-03-13
+### Release Summary
 - Updated Trustification image to 1.3.1
 
 ### Minor Changes
