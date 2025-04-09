@@ -24,7 +24,7 @@ An [NGINX](https://www.nginx.com) front end places an entrypoint to the RHTPA UI
 
 * 24 vCPU 
 * 48 GB RAM
-* 100 GB of fre disk space 
+* 100 GB of free disk space 
 
 ## Requirements
 
