@@ -20,77 +20,76 @@ The RHTPA Ansible collection deploys the following RHTPA components:
 
 An [NGINX](https://www.nginx.com) front end places an entrypoint to the RHTPA UI.
 
-## Prerequisites
-
-* Red Hat Enterprise Linux server version 9.3 or higher server.
-* Install and configure Ansible on a control node before performing the automated deployment.
-
 ## Minimum hardware requirements 
 
-* 24 vCPU, 
-* 48 GB Ram, 
-* 100 GB Disk space 
+* 24 vCPU 
+* 48 GB RAM
+* 100 GB of free disk space 
 
 ## Requirements
 
-* Ansible 2.16.0 or greater
-* Python 3.10.0 or greater
-* RHEL x86\_64 9.3 or greater.
+* Ansible 2.16.0 or greater.
+* Python 3.10.0 or greater.
+* Red Hat Enterprise Linux 9.3 or greater for the x86_64 architecture.
 * Installation and configuration of Ansible on a control node to perform the automation.
+* External services:
+    * An OpenID Connect (OIDC) provider.
+    * Simple Queue Service (SQS).
+    * A new PostgreSQL database.
+    * AWS Simple Storage Service (S3) or an S3-compatible service, for example, MinIO.
 
-You must supply the following external services:
+## External services
 
-* An OpenID Connect (OIDC) provider, such [RedHat Single Sign On](https://console.redhat.com/ansible/automation-hub/repo/published/redhat/sso/) or Amazon Web Services (AWS) Cognito.
-* Simple Queue Service (SQS), for example, [Red Hat AMQ Streams](https://console.redhat.com/ansible/automation-hub/repo/published/redhat/amq_streams/)
-* A new PostgreSQL database.
-* AWS Simple Storage Service (S3) or an S3-compatible service, for example, MinIO.
-
-## External Services Configurations
-
-### RedHat Single Sign On
+### OIDC providers
 
 * [Trustification Keycloak](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#keycloak)
+* [Red Hat Single Sign-On](https://console.redhat.com/ansible/automation-hub/repo/published/redhat/sso/)
+* [Amazon Web Services (AWS) Cognito](https://docs.aws.amazon.com/cognito/latest/developerguide/getting-started-with-cognito-user-pools.html)
 
+### SQS
 
-### RedHat Kafka streams  
-  With the following topic names created:
+* [Trustification event queues](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#event-queues)
+* [Red Hat AMQ Streams](https://console.redhat.com/ansible/automation-hub/repo/published/redhat/amq_streams/).
+
+Create the following topic names before installing RHTPA:
+
 ```
-  bombastic-failed-default
-  bombastic-indexed-default
-  bombastic-stored-default
-  vexination-failed-default
-  vexination-indexed-default
-  vexination-stored-default
-  v11y-failed-default
-  v11y-indexed-default
-  v11y-stored-default
+bombastic-failed-default
+bombastic-indexed-default
+bombastic-stored-default
+vexination-failed-default
+vexination-indexed-default
+vexination-stored-default
+v11y-failed-default
+v11y-indexed-default
+v11y-stored-default
 ```
 
 Configure these topic names in the `roles/tpa_single_node/vars/main.yml` file.
 
-* [Trustification event queues](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#event-queues)
-
-### PostgreSQL
-
-Create a PostgreSQL database and configure your database credentials in the environment variables.
-See 'Verifying the deployment section' for details.
-You can use other database configurations in the `roles/tpa_single_node/vars/main.yml` file.
-
-Postgres SSL mode is enabled by default.
-To disable SSL, you can change the following line in the `roles/tpa_single_node/vars/main.yml` file: `tpa_single_node_pg_ssl_mode: disable`.
+### PostgreSQL database
 
 * [Trustification-PostgreSQL](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#rds)
 
+Create a PostgreSQL database and configure your database credentials in the environment variables.
+You can use other database configurations in the `roles/tpa_single_node/vars/main.yml` file.
+
+PostgreSQL SSL mode is enabled by default.
+To disable SSL, you can change the following line in the `roles/tpa_single_node/vars/main.yml` file: `tpa_single_node_pg_ssl_mode: disable`.
+
 ### S3 or S3 compatible service
-  Have the following unversioned S3 bucket names created:
-  ```
-  bombastic-default
-  vexination-default
-  v11y-default 
-  ```
-Configure these S3 bucket names in the `roles/tpa_single_node/vars/main.yml` file.
 
 * [Trustification S3](https://github.com/trustification/trustification/blob/release/1.2.z/docs/modules/admin/pages/cluster-preparing.adoc#s3-storage)
+
+Create the following unversioned S3 bucket names before installing RHTPA:
+
+```
+bombastic-default
+vexination-default
+v11y-default 
+```
+
+Configure these S3 bucket names in the `roles/tpa_single_node/vars/main.yml` file.
 
 ## Installation
 
@@ -122,10 +121,10 @@ Choose between AWS S3 or an S3-compatible service, and update the `roles/tpa_sin
 
 Choose between Keycloak or AWS Cognito, and update the `roles/tpa_single_node/defaults/main.yml` file accordingly.
 
-In case of Minio, create environmental variable for storage endpoint:
+In case of MinIO, create environmental variable for storage endpoint:
 
 ```
-export TPA_STORAGE_ENDPOINT=<Minio storage URL >
+export TPA_STORAGE_ENDPOINT=<MinIO storage URL >
 ```
 
 For Kafka events, create an environment variable pointing to the bootstrap server:
@@ -188,9 +187,9 @@ Update the `roles/tpa_single_node/vars/main.yml` file with the appropriate value
 Storage Service:
 
 * Update the Storage type, either `s3` or `minio`.
-* Update the S3 or Minio bucket names.
-* Update the AWS region for AWS S3 or keep `us-west-1` for Minio.
-* In case of Minio, update the Minio storage end point `tpa_single_node_storage_endpoint`.
+* Update the S3 or MinIO bucket names.
+* Update the AWS region for AWS S3 or keep `us-west-1` for MinIO.
+* In case of MinIO, update the MinIO storage end point `tpa_single_node_storage_endpoint`.
 
 SQS Service:
 
